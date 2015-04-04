@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: handlebars.numeral/handlebars.numeral.js</title>
+
+    <script src="scripts/jquery-1.11.2.min.js"> </script>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title"><small>Source</small> handlebars.numeral/handlebars.numeral.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function (moduleFactory) {
+    if(typeof exports === "object") {
+        module.exports = moduleFactory(require("lodash"), require("numeral"), require("wolsey"));
+    } else if (typeof define === "function" &amp;&amp; define.amd) {
+        define(["lodash", "numeral", "wolsey"], moduleFactory);
+    }
+}(function (_, numeral, Wolsey) {/**
+ * @module handlebars%numeral
+ * @description  Helpers providing functionality of [Numeral.js](http://numeraljs.com) and [Wolsey](http://wolsey.solidgoldpig.com)
+ *
+ *     var Handlebars = require("handlebars");
+ *     var NumeralHelper = require("handlebars.numeral");
+ *     NumeralHelper.registerHelpers(Handlebars);
+ * 
+ * @returns {object} NumeralHelper instance
+ */
+
+    var cardinal = new Wolsey();
+
+    var NumeralHelpers = function (Handlebars) {
+
+        /* numeral.js language configuration
+        * language : english united kingdom (uk)
+        * author : Dan Ristic : https://github.com/dristic
+        */
+        var enLanguage = {
+            delimiters: {
+                thousands: ",",
+                decimal: "."
+            },
+            abbreviations: {
+                thousand: "k",
+                million: "m"
+            },
+            ordinal: function (number) {
+                var b = number % 10;
+                return (~~ (number % 100 / 10) === 1) ? "th" :
+                (b === 1) ? "st" :
+                (b === 2) ? "nd" :
+                (b === 3) ? "rd" : "th";
+            },
+            currency: {
+                symbol: "£"
+            }
+        };
+        numeral.language("en", enLanguage);
+
+        var defaults = {};
+        var lang = "en";
+
+        defaults.en = {
+            zero: "n/a",
+            number: "0,000[.]00",
+            currency: "$0,000.00",
+            byte: "0,000b"
+        };
+
+        function numeralHelper () {
+            var args = Array.prototype.slice.call(arguments),
+                options = args.pop(),
+                helperType = args.shift(),
+                number = args.shift(),
+                format = args.shift(),
+                formatParams = args.shift(),
+                formatParams1 = args.shift(),
+                formatParams2 = args.shift();
+
+            if (options.hash &amp;&amp; options.hash.params) {
+                options.hash = _.extend({}, options.hash.params, options.hash);
+                delete options.hash.params;
+            }
+            var params = options.hash;
+            if (!number) {
+                number = params.number;
+            }
+            number = +number;
+            if (isNaN(number)) {
+                number = 0;
+            }
+
+            var defaultFormat = defaults[lang][helperType];
+            if (format === undefined) {
+                format = params.format;
+                if (format === undefined) {
+                    format = defaultFormat;
+                }
+            }
+
+            var numeralObj = numeral(number);
+
+            return numeralObj.format(format);
+        }
+
+        /**
+         * @template number
+         * @block helper
+         * @param {number} 0 Number
+         * @param {string} [1] Format
+         * @param {string} [format] Alternative way to pass format
+         * 
+         * @description  Formats a number
+         * 
+         *     {{number n}}
+         *
+         * Using an explicit format
+         *
+         *      {{number n f}}
+         *      {{number n format=f}}
+         */
+        Handlebars.registerHelper("number", function () {
+            [].unshift.call(arguments, "number");
+            return numeralHelper.apply(this, arguments);
+        });
+
+        /**
+         * @template currency
+         * @block helper
+         * @param {number} 0 Number
+         * @description  Formats a number as currency
+         * 
+         *     {{currency n}}
+         */
+        Handlebars.registerHelper("currency", function () {
+            [].unshift.call(arguments, "currency");
+            return numeralHelper.apply(this, arguments);
+        });
+
+        /**
+         * @template byte
+         * @block helper
+         * @param {number} 0 Number
+         * @description  Formats a number as human-readable computer size
+         * 
+         *     {{byte n}}
+         */
+        Handlebars.registerHelper("byte", function () {
+            [].unshift.call(arguments, "byte");
+            return numeralHelper.apply(this, arguments);
+        });
+
+        /**
+         * @template numeral
+         * @block helper
+         * @param {number} 0 Number
+         * @description  Outputs a number as a word
+         * 
+         *     {{numeral n}}
+         */
+        Handlebars.registerHelper("numeral", function () {
+            var args = Array.prototype.slice.call(arguments);
+            var options;
+            if (typeof args[args.length-1] === "object") {
+                options = args.pop();
+            }
+
+            var number = args.shift();
+
+            if (options.hash &amp;&amp; options.hash.params) {
+                options.hash = _.extend({}, options.hash.params, options.hash);
+                delete options.hash.params;
+            }
+            var params = options.hash;
+            return cardinal.numeral(number, params);
+        });
+
+        /**
+         * @template ordinal
+         * @block helper
+         * @param {number} 0 Number
+         * @param {boolean} [1] Output as number
+         * @param {boolean} [number=false] Output as number
+         * 
+         * @description  Outputs a number as an ordinal
+         *
+         *     {{ordinal n}}
+         *
+         * As a number
+         *
+         *      {{ordinal n true}}
+         *      {{ordinal n number=true}}
+         *     
+         */
+        Handlebars.registerHelper("ordinal", function () {
+            var args = Array.prototype.slice.call(arguments);
+            var options;
+            if (typeof args[args.length-1] === "object") {
+                options = args.pop();
+            }
+
+            var number = args.shift();
+            var asNumber = args.shift();
+
+            if (options.hash &amp;&amp; options.hash.params) {
+                options.hash = _.extend({}, options.hash.params, options.hash);
+                delete options.hash.params;
+            }
+            var params = options.hash;
+            if (!number) {
+                number = params.number;
+            }
+            if (asNumber === undefined) {
+                if (params.number !== undefined) {
+                    asNumber = params.number;
+                } else {
+                    asNumber = params.asnumber;
+                }
+            }
+            number = +number;
+
+            var method = asNumber ? "ordinalAsNumber" : "ordinal";
+            return cardinal[method](number, params);
+        });
+
+    };
+
+    var external = {
+        /**
+         * @method registerHelpers
+         * @static
+         * @param {object} hbars Handlebars instance
+         * @description Register NumeralHelper helpers with Handlebars
+         *
+         * - {@link template:moment}
+         * - {@link template:duration}
+         */
+        registerHelpers: function (hbars) {
+            NumeralHelpers(hbars);
+        }
+    };
+
+    return external;
+
+}));</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3 class="modules">Modules</h3><ul><li><a href="module-handlebars%2525choice.html">handlebars.choice</a></li><li><a href="module-handlebars%2525el.html">handlebars.el</a></li><li><a href="module-handlebars%2525el%2525form.html">handlebars.el.form</a></li><li><a href="module-handlebars%2525filter.html">handlebars.filter</a></li><li><a href="module-handlebars%2525moment.html">handlebars.moment</a></li><li><a href="module-handlebars%2525numeral.html">handlebars.numeral</a></li><li><a href="module-handlebars%2525phrase.html">handlebars.phrase</a></li><li><a href="module-larynx.html">larynx</a></li></ul><h3 class="template-helpers">Template helpers</h3><ul><li><a href="template-byte.html">byte</a></li><li><a href="template-choice.html">choice</a></li><li><a href="template-choose.html">choose</a></li><li><a href="template-currency.html">currency</a></li><li><a href="template-duration.html">duration</a></li><li><a href="template-el.html">el</a></li><li><a href="template-el-checkbox.html">el-checkbox</a></li><li><a href="template-el-field.html">el-field</a></li><li><a href="template-el-fieldset.html">el-fieldset</a></li><li><a href="template-el-file.html">el-file</a></li><li><a href="template-el-form.html">el-form</a></li><li><a href="template-el-hidden.html">el-hidden</a></li><li><a href="template-el-label.html">el-label</a></li><li><a href="template-el-message.html">el-message</a></li><li><a href="template-el-password.html">el-password</a></li><li><a href="template-el-radio.html">el-radio</a></li><li><a href="template-el-select.html">el-select</a></li><li><a href="template-el-submit.html">el-submit</a></li><li><a href="template-el-text.html">el-text</a></li><li><a href="template-el-textarea.html">el-textarea</a></li><li><a href="template-filter.html">filter</a></li><li><a href="template-moment.html">moment</a></li><li><a href="template-number.html">number</a></li><li><a href="template-numeral.html">numeral</a></li><li><a href="template-ordinal.html">ordinal</a></li><li><a href="template-phrase.html">phrase</a></li></ul><h3 class="template-filters">Template filters</h3><ul><li><a href="template-capitalize.html">capitalize</a></li><li><a href="template-lowercase.html">lowercase</a></li><li><a href="template-markdown.html">markdown</a></li><li><a href="template-titlecase.html">titlecase</a></li><li><a href="template-uppercase.html">uppercase</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
