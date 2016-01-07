@@ -18,9 +18,9 @@
 <body>
 
 <div id="main">
-
+<div class="header">
     <h1 class="page-title"><small>Filter template filter</small> titlecase</h1>
-
+</div>
     
 
 
@@ -62,9 +62,19 @@
 
     
         
-            <div class="description"><p>Transforms output to titlecase</p></div>
+            <div class="description container"><p>Transforms output to titlecase</p></div>
             
         
+
+        <!-- ?js= self.partial('details.tmpl', doc) ?-->
+
+        
+    
+    </div>
+
+    
+
+    
 
         
 
@@ -114,14 +124,6 @@
 </dl>
 
 
-        
-    
-    </div>
-
-    
-
-    
-
     
 
      
@@ -142,6 +144,7 @@
             <h5>Parameters:</h5>
             
 
+<div class="paramswrapper">
 <table class="params">
     <thead>
     <tr>
@@ -186,6 +189,7 @@
     
     </tbody>
 </table>
+</div>
 
         
     
@@ -199,14 +203,15 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3 class="modules">Modules</h3><ul><li><a href="module-handlebars%2525choice.html">handlebars.choice</a></li><li><a href="module-handlebars%2525el.html">handlebars.el</a></li><li><a href="module-handlebars%2525el%2525form.html">handlebars.el.form</a></li><li><a href="module-handlebars%2525filter.html">handlebars.filter</a></li><li><a href="module-handlebars%2525moment.html">handlebars.moment</a></li><li><a href="module-handlebars%2525numeral.html">handlebars.numeral</a></li><li><a href="module-handlebars%2525phrase.html">handlebars.phrase</a></li><li><a href="module-larynx.html">larynx</a></li></ul><h3 class="template-helpers">Template helpers</h3><ul><li><a href="template-byte.html">byte</a></li><li><a href="template-choice.html">choice</a></li><li><a href="template-choose.html">choose</a></li><li><a href="template-currency.html">currency</a></li><li><a href="template-duration.html">duration</a></li><li><a href="template-el.html">el</a></li><li><a href="template-el-checkbox.html">el-checkbox</a></li><li><a href="template-el-field.html">el-field</a></li><li><a href="template-el-fieldset.html">el-fieldset</a></li><li><a href="template-el-file.html">el-file</a></li><li><a href="template-el-form.html">el-form</a></li><li><a href="template-el-hidden.html">el-hidden</a></li><li><a href="template-el-label.html">el-label</a></li><li><a href="template-el-message.html">el-message</a></li><li><a href="template-el-password.html">el-password</a></li><li><a href="template-el-radio.html">el-radio</a></li><li><a href="template-el-select.html">el-select</a></li><li><a href="template-el-submit.html">el-submit</a></li><li><a href="template-el-text.html">el-text</a></li><li><a href="template-el-textarea.html">el-textarea</a></li><li><a href="template-filter.html">filter</a></li><li><a href="template-moment.html">moment</a></li><li><a href="template-number.html">number</a></li><li><a href="template-numeral.html">numeral</a></li><li><a href="template-ordinal.html">ordinal</a></li><li><a href="template-phrase.html">phrase</a></li></ul><h3 class="template-filters">Template filters</h3><ul><li><a href="template-capitalize.html">capitalize</a></li><li><a href="template-lowercase.html">lowercase</a></li><li><a href="template-markdown.html">markdown</a></li><li><a href="template-titlecase.html">titlecase</a></li><li><a href="template-uppercase.html">uppercase</a></li></ul>
+<div class="navwrapout">
+    <div class="navwrap"><h2><a href="index.html">larynx</a></h2><div class="navsection"><h3 class="modules">Modules</h3><ul><li><a href="module-handlebars%2525choice.html">handlebars.choice</a></li><li><a href="module-handlebars%2525el.html">handlebars.el</a></li><li><a href="module-handlebars%2525el%2525form.html">handlebars.el.form</a></li><li><a href="module-handlebars%2525filter.html">handlebars.filter</a></li><li><a href="module-handlebars%2525moment.html">handlebars.moment</a></li><li><a href="module-handlebars%2525numeral.html">handlebars.numeral</a></li><li><a href="module-handlebars%2525phrase.html">handlebars.phrase</a></li><li><a href="module-larynx.html">larynx</a></li></ul></div><div class="navsection"><h3 class="template-helpers">Template helpers</h3><ul><li><a href="template-byte.html">byte</a></li><li><a href="template-choice.html">choice</a></li><li><a href="template-choose.html">choose</a></li><li><a href="template-currency.html">currency</a></li><li><a href="template-duration.html">duration</a></li><li><a href="template-el.html">el</a></li><li><a href="template-el-checkbox.html">el-checkbox</a></li><li><a href="template-el-field.html">el-field</a></li><li><a href="template-el-fieldset.html">el-fieldset</a></li><li><a href="template-el-file.html">el-file</a></li><li><a href="template-el-form.html">el-form</a></li><li><a href="template-el-hidden.html">el-hidden</a></li><li><a href="template-el-label.html">el-label</a></li><li><a href="template-el-message.html">el-message</a></li><li><a href="template-el-password.html">el-password</a></li><li><a href="template-el-radio.html">el-radio</a></li><li><a href="template-el-select.html">el-select</a></li><li><a href="template-el-submit.html">el-submit</a></li><li><a href="template-el-text.html">el-text</a></li><li><a href="template-el-textarea.html">el-textarea</a></li><li><a href="template-filter.html">filter</a></li><li><a href="template-moment.html">moment</a></li><li><a href="template-number.html">number</a></li><li><a href="template-numeral.html">numeral</a></li><li><a href="template-ordinal.html">ordinal</a></li><li><a href="template-phrase.html">phrase</a></li></ul></div><div class="navsection"><h3 class="template-filters">Template filters</h3><ul><li><a href="template-capitalize.html">capitalize</a></li><li><a href="template-lowercase.html">lowercase</a></li><li><a href="template-markdown.html">markdown</a></li><li><a href="template-titlecase.html">titlecase</a></li><li><a href="template-uppercase.html">uppercase</a></li></ul></div></div>
+    <div class="external-links">
+      <p class="github"><a href="https://github.com/solidgoldpig/larynx" title="View larynx on Github"><span>View on </span> Github</a></p>
+      <p class="codesite"><a href="http://code.solidgoldpig.com" title="View other Solidgoldpig projects">Solidgoldpig code</a></p>
+    </div>
+</div>
 </nav>
 
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a>
-</footer>
 
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
