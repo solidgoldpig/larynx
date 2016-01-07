@@ -1,11 +1,11 @@
 {
     "name": "larynx",
     "description": "Collection of Handlebars helpers",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "larynx.js",
     "repository": {
         "type": "git",
-        "url": "git://github.com/solidgoldpig/larynx.git#1.0.0"
+        "url": "git://github.com/solidgoldpig/larynx.git#1.0.1"
     },
     "homepage": "http://larynx.solidgoldpig.com",
     "bugs": "https://github.com/solidgoldpig/larynx/issues",
@@ -45,17 +45,17 @@
     ],
     "dependencies": {
         "lodash": ">=0.0.0",
+        "handlebars": ">=0.0.0",
         "handlebars.phrase": "1.0.4",
         "handlebars.choice": "1.0.1",
         "handlebars.filter": "1.0.1",
-        "handlebars.el": "1.0.1",
-        "handlebars.el.form": "1.0.2",
-        "handlebars.moment": "1.0.3",
+        "handlebars.el": "1.0.5",
+        "handlebars.el.form": "1.0.5",
+        "handlebars.moment": "1.0.4",
         "handlebars.numeral": "0.1.1"
     },
     "devDependencies": {
         "markdown": ">=0.0.0",
-        "handlebars": ">=0.0.0",
         "jasmine-node": "^1.14.x",
         "log": "^1.4.0"
     },
